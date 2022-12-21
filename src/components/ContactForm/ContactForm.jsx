@@ -14,24 +14,23 @@ export class ContactForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-
     const newObj = {
       id: nanoid(),
       name: this.state.name,
       number: this.state.number,
     };
 
-    this.setState(prevState => ({
-      contacts: [newObj, ...prevState.contacts],
-    }));
+    this.props.handleAddContact(newObj);
 
-    this.setState({ name: '', number: '' }); //reset input
+    this.setState({
+      name: '',
+      number: '',
+    });
   };
 
   render() {
     return (
       <form onSubmit={this.handleSubmit} className={styles.form}>
-        {/* <label htmlFor={this.nameInputId}> */}
         <label>
           <input
             className={styles.inputField}
@@ -45,10 +44,8 @@ export class ContactForm extends Component {
             onChange={this.handleInput}
             id={nanoid()}
           />
-          {/* <button type="submit">Add Contact</button> */}
         </label>
 
-        {/* <label htmlFor={this.phoneInputId}> */}
         <label>
           <input
             className={styles.inputField}

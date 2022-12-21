@@ -7,12 +7,7 @@ import { Filter } from './Filter/Filter';
 
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
 
@@ -20,18 +15,26 @@ export class App extends Component {
     this.setState({ filter: e.currentTarget.value });
   };
 
+  handleAddContact = newContact => {
+    this.state.contacts.find(item => item.name === newContact.name)
+      ? alert(`${newContact.name} is already in contacts`)
+      : this.setState(prevState => ({
+          contacts: [newContact, ...prevState.contacts],
+        }));
+  };
+
   render() {
-    const normalizeText = this.state.filter.toLowerCase();
+    const normalizeText = this.state.filter.toLowerCase().trim();
 
     const filteredContacts = this.state.contacts.filter(item =>
-      item.name.toLowerCase().includes(normalizeText)
+      item.name.toLowerCase().trim().includes(normalizeText)
     );
 
     return (
       <section className={styles.phonebook}>
         <div className={styles.container}>
           <h1>Phonebook</h1>
-          <ContactForm />
+          <ContactForm handleAddContact={this.handleAddContact} />
         </div>
         <div className={styles.container}>
           <h2>Contacts</h2>

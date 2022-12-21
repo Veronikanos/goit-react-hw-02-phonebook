@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 
-export const ContactList = ({ contacts, filter, onChange }) => {
+export const ContactList = ({ contacts }) => {
   return (
     <>
       <ol>
