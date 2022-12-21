@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { nanoid } from 'nanoid';
 import styles from './App.module.css';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
@@ -23,6 +22,12 @@ export class App extends Component {
         }));
   };
 
+  deleteContact = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
+  };
+
   render() {
     const normalizeText = this.state.filter.toLowerCase().trim();
 
@@ -38,8 +43,18 @@ export class App extends Component {
         </div>
         <div className={styles.container}>
           <h2>Contacts</h2>
-          <Filter filter={this.state.filter} onChange={this.changeFilter} />
-          <ContactList contacts={filteredContacts} />
+          {!this.state.contacts.length ? (
+            <h3>Your phonebook is empty. Add your first contact</h3>
+          ) : (
+            <>
+              <h3>Your phonebook has {this.state.contacts.length} contacts</h3>
+              <Filter filter={this.state.filter} onChange={this.changeFilter} />
+              <ContactList
+                contacts={filteredContacts}
+                onDelete={this.deleteContact}
+              />
+            </>
+          )}
         </div>
       </section>
     );

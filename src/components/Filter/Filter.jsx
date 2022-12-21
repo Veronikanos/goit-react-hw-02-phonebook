@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import styles from './Filter.module.css';
 export const Filter = ({ filter, onChange }) => {
   return (
@@ -7,8 +9,13 @@ export const Filter = ({ filter, onChange }) => {
         type="text"
         value={filter}
         onChange={onChange}
-        class={styles.inputField}
+        className={styles.inputField}
       />
     </label>
   );
+};
+
+Filter.propTypes = {
+  filter: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };

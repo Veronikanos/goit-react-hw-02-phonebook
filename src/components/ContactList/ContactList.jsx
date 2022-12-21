@@ -1,15 +1,33 @@
 import { nanoid } from 'nanoid';
+import styles from './ContactList.module.css';
+import PropTypes from 'prop-types';
 
-export const ContactList = ({ contacts }) => {
+export const ContactList = ({ contacts, onDelete }) => {
   return (
     <>
-      <ol>
+      <ul>
         {contacts.map(item => (
-          <li key={nanoid()}>
-            {item.name} {item.number}
+          <li key={nanoid()} className={styles.contactUser}>
+            <p className={styles.user}>
+              <b>{item.name}</b> {item.number}
+            </p>
+            <button type="submit" onClick={() => onDelete(item.id)}>
+              Delete
+            </button>
           </li>
         ))}
-      </ol>
+      </ul>
     </>
   );
+};
+
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ),
+  onDelete: PropTypes.func.isRequired,
 };
