@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 import styles from './App.module.css';
-import { Contacts } from './Contacts/Contacts';
+import { ContactForm } from './ContactForm/ContactForm';
+import { ContactList } from './ContactList/ContactList';
+import { Filter } from './Filter/Filter';
 
 export class App extends Component {
   state = {
@@ -12,42 +14,6 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
-  };
-
-  // addContact = text => {
-  //   const newObj = {
-  //     id: nanoid(),
-  //     name: text,
-  //   };
-
-  //   this.setState(prevState => ({
-  //     contacts: [newObj, ...prevState.contacts],
-  //   }));
-
-  //   // console.log(this.state);
-  // };
-
-  handleInput = e => {
-    this.setState({ [e.target.name]: e.target.value });
-    console.log(this.state);
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-
-    const newObj = {
-      id: nanoid(),
-      name: this.state.name,
-      number: this.state.number,
-    };
-
-    this.setState(prevState => ({
-      contacts: [newObj, ...prevState.contacts],
-    }));
-
-    this.setState({ name: '', number: '' }); //reset input
   };
 
   changeFilter = e => {
@@ -65,50 +31,13 @@ export class App extends Component {
       <section className={styles.phonebook}>
         <div className={styles.container}>
           <h1>Phonebook</h1>
-          <form onSubmit={this.handleSubmit} className={styles.form}>
-            {/* <label htmlFor={this.nameInputId}> */}
-            <label>
-              <input
-                className={styles.inputField}
-                placeholder="Name"
-                type="text"
-                name="name"
-                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-                title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-                required
-                value={this.state.name}
-                onChange={this.handleInput}
-                id={nanoid()}
-              />
-              {/* <button type="submit">Add Contact</button> */}
-            </label>
-
-            {/* <label htmlFor={this.phoneInputId}> */}
-            <label>
-              <input
-                className={styles.inputField}
-                placeholder="Phone number"
-                type="tel"
-                name="number"
-                pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-                title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-                required
-                value={this.state.number}
-                onChange={this.handleInput}
-                id={nanoid()}
-              />
-            </label>
-
-            <button type="submit" className={styles.button}>
-              Add Contact
-            </button>
-          </form>
+          <ContactForm />
         </div>
-        <Contacts
-          contacts={filteredContacts}
-          filter={this.state.filter}
-          onChange={this.changeFilter}
-        />
+        <div className={styles.container}>
+          <h2>Contacts</h2>
+          <Filter filter={this.state.filter} onChange={this.changeFilter} />
+          <ContactList contacts={filteredContacts} />
+        </div>
       </section>
     );
   }
