@@ -40,7 +40,7 @@ contacts between different sessions (page refresh).
 ### HOW TO RUN THIS PROJECT LOCALLY
 
 Clone this repo:
-`git clone https://veronikanos.github.io/goit-react-hw-01-components/`
+`git clone https://github.com/Veronikanos/goit-react-hw-02-phonebook.git`
 
 In the project directory, you can run:
 
